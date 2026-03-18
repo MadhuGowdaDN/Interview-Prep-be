@@ -14,6 +14,14 @@ export class CreateQuestionDto {
 
   @IsString()
   type: QuestionType;
+
+  @IsString()
+  @IsOptional()
+  skill: string;
+
+  @IsString()
+  @IsOptional()
+  difficulty: string;
 }
 
 export class CreateAssessmentDto {

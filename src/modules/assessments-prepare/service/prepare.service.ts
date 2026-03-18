@@ -56,6 +56,21 @@ export class PrepareAssessmentService {
     return { time: remainingSeconds };
   }
 
+  async fetchQuestions(id: string,) {
+    const mapping = await this.assessmentMappingRepo.findById(id);
+    if (!mapping) throw new Error('Assessment Mapping not found');
+    const prepareAssessmentId = mapping.prepareAssessmentId.toString();
+    const attempt = await this.prepareRepo.findById(prepareAssessmentId);
+    if (!attempt) throw new Error('Prepare assessment not found');
+    const assessment = await this.assessmentRepo
+      .findById(attempt.assessmentId.toString())
+      .lean();
+    if (!assessment) throw new Error('Assessment not found');
+    const questionsData = assessment.questions;
+    const alteredData = questionsData?.map(item => ({ ...item, id: item?.['_id'] }));
+    return alteredData;
+  }
+
   async answer(anserDto: SubmitQuestionAnswerDto) {
 
     const { id, prepareAssessmentId } = anserDto;

@@ -1,6 +1,6 @@
-import { CreateAssessmentDto, UpdateAssessmentDto, CreateQuestionDto, UpdateQuestionDto } from '@modules/assessments/dto';
+import { CreateAssessmentDto, CreateQuestionDto, UpdateAssessmentDto, UpdateQuestionDto } from '@modules/assessments/dto';
 import { AssessmentService } from '@modules/assessments/service';
-import { Body, Controller, Get, Param, Post, Put, Delete } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Post, Put } from '@nestjs/common';
 
 
 @Controller('assessments')
@@ -35,6 +35,7 @@ export class AssessmentController {
 
   @Post(':id/questions')
   addQuestion(@Param('id') id: string, @Body() dto: CreateQuestionDto) {
+    console.log("coming to add ", dto)
     return this.service.addQuestion(id, dto);
   }
 

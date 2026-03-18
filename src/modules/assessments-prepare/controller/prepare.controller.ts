@@ -1,6 +1,6 @@
 import { SubmitQuestionAnswerDto } from "@modules/assessments-prepare/dto";
 import { PrepareAssessmentService } from "@modules/assessments-prepare/service";
-import { Controller, Get, Post, Query } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query } from "@nestjs/common";
 
 @Controller('prepare-assessments')
 export class PrepareAssessmentController {
@@ -20,10 +20,16 @@ export class PrepareAssessmentController {
 
   @Get('fetch-time')
   fetchTime(@Query('id') id: string) {
-    console.log("id ", id)
     return this.service.fetchTime(
       id
     );
+  }
+
+  @Get('questions/:mappingId')
+  fetchQuestions(
+    @Param('mappingId') id: string,
+  ) {
+    return this.service.fetchQuestions(id);
   }
 
   @Post('answer')
